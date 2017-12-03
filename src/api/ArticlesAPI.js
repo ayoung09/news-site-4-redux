@@ -17,14 +17,20 @@ const fetchArticlesBySection = (section) => {
 const fetchArticles = (filters = null) => {
   let url = 'http://localhost:3001/api/articles'
   if (filters) {
-    url += `?filter=${JSON.stringify(filters)}`
+    url = `?filter=${JSON.stringify(filters)}`
   }
   return fetch(url).then((response) => response.json());
-}		  
+}	
+
+const searchArticles = (text) => {
+  return fetch(`http://localhost:3001/api/articles?filter={"where":{"title":{"ilike":"${text}"}}}`)
+  .then((response) => response.json());
+}
 
 
 export default {
   fetchArticleByID: fetchArticleByID,
   fetchArticles: fetchArticles,
-  fetchArticlesBySection: fetchArticlesBySection
+  fetchArticlesBySection: fetchArticlesBySection,
+  searchArticles: searchArticles,
 }

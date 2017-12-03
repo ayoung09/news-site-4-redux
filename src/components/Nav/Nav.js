@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import sections from '../../config/Sections.json';
 
 class AppNav extends Component {
 
-  _handleClick(value){
-    this.props.handleNavClick(value)
-  } 
-
   render() {
     const navItem = sections.map((navItem, index) => {
       return (
-        <NavItem id={index} onClick={this._handleClick.bind(this, navItem.value)} key={navItem.label} href='#'>
-          {navItem.label}
+        <NavItem key={index}>
+          <Link to={`/sections/${navItem.value}`}>{navItem.label}</Link>
         </NavItem>
       );
     });
@@ -21,7 +18,7 @@ class AppNav extends Component {
       <Navbar fixedTop={true}>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="#">React-Bootstrap</a>
+            <a href="/">News Site</a>
           </Navbar.Brand>
         </Navbar.Header>
         <Nav>
