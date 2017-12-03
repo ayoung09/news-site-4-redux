@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormControl, FormGroup } from 'react-bootstrap';
 import ArticleList from '../components/ArticleList/ArticleList.js';
-import { fetchAllArticles } from '../modules/articles.module';
+import { fetchAllArticles, searchArticlesByTitle } from '../modules/articles.module';
 
 const mapStateToProps = state => ({
   allArticles: state.allArticles,
@@ -10,6 +10,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchAllArticles: () => dispatch(fetchAllArticles()),
+  searchArticlesByTitle: (searchText) => dispatch(searchArticlesByTitle(searchText))
 });
 
 class HomePage extends Component {
@@ -19,13 +20,8 @@ class HomePage extends Component {
   }
 
   _handleSearch(event) {
-    const textToSearchFor = event.target.value
-    //TO DO: We don't want to set state from within the component -- hook this up to the store!
-      //ArticlesAPI.searchArticles(textToSearchFor).then((apiResponseJSON) => {
-        // this.setState({
-        //   newsArticles: apiResponseJSON
-        // });
-      //});
+    const searchText = event.target.value;
+    searchText ? this.props.searchArticlesByTitle(searchText) : this.props.fetchAllArticles();
   }
 
   render() {
