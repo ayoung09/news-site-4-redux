@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ArticleList from '../components/ArticleList/ArticleList.js'
-import ArticlesAPI from '../api/ArticlesAPI.js'
 import { fetchArticlesBySection } from '../modules/articles.module';
 
 const mapStateToProps = state => ({
