@@ -17,7 +17,7 @@ const fetchArticlesBySection = (section) => {
 const fetchArticles = (filters = null) => {
   let url = 'http://localhost:3001/api/articles'
   if (filters) {
-    url = `?filter=${JSON.stringify(filters)}`
+    url += `?filter=${JSON.stringify(filters)}`
   }
   return fetch(url).then((response) => response.json());
 }	

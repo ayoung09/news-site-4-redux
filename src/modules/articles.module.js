@@ -52,6 +52,32 @@ export const fetchCurrentArticle = (articleID) => {
   }
 };
 
+export const fetchArticlesBySection = (section) => {
+  return (dispatch) => {
+    ArticlesAPI.fetchArticlesBySection(section)
+      .then(articlesJson => {
+        dispatch(setAllArticles(articlesJson));
+      })
+      //error handling not necessary for solution
+      .catch(error => {
+        dispatch(setError(error));
+      })
+  }
+};
+
+export const searchArticlesByTitle = (searchText) => {
+  return (dispatch) => {
+    ArticlesAPI.searchArticles(searchText)
+      .then(articlesJson => {
+        dispatch(setAllArticles(articlesJson));
+      })
+      //error handling not necessary for solution
+      .catch(error => {
+        dispatch(setError(error));
+      })
+  }
+};
+
 
 //INITIAL STATE
 const initialState = {

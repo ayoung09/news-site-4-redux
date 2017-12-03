@@ -1,40 +1,36 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import ArticleList from '../components/ArticleList/ArticleList.js'
 import ArticlesAPI from '../api/ArticlesAPI.js'
+import { fetchArticlesBySection } from '../modules/articles.module';
 
-class ArticlePage extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      articles: []
-    }
-  }
+const mapStateToProps = state => ({
+  allArticles: state.allArticles
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchArticlesBySection: (section) => dispatch(fetchArticlesBySection(section))
+});
+
+class SectionPage extends Component {
 
   componentDidMount() {
-    ArticlesAPI.fetchArticlesBySection(this.props.match.params.sectionId).then((apiResponseJSON) => {
-      this.setState({
-        articles: apiResponseJSON
-      });
-    });
+    this.props.fetchArticlesBySection(this.props.match.params.sectionId);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState === this.state) {
-      ArticlesAPI.fetchArticlesBySection(this.props.match.params.sectionId).then((apiResponseJSON) => {
-        this.setState({
-          articles: apiResponseJSON
-        });
-      });
+    if (prevProps.match.params.sectionId !== this.props.match.params.sectionId) {
+      this.props.fetchArticlesBySection(this.props.match.params.sectionId);
     }
   }
 
   render() {
     return (
       <div>
-        <ArticleList articles={this.state.articles} />
+        <ArticleList articles={this.props.allArticles} />
       </div>
     );
   }
 }
 
-export default ArticlePage;
+export default connect(mapStateToProps, mapDispatchToProps)(SectionPage);
